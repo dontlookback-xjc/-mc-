@@ -1,0 +1,1 @@
+<view class="{{['mask',(maskShow)?'active':'']}}"><view data-event-opts="{{[['tap',[['$emit',['maskClick']]]],['touchmove',[['',['$event']]]]]}}" class="{{[(maskShow)?'gray':'']}}" bindtap="__e" catchtouchmove="__e"></view><view class="{{[(maskShow)?'blur':'']}}" style="height:100%;"><slot></slot></view></view>

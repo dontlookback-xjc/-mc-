@@ -1,0 +1,1 @@
+<view class="content"><view class="left"><label data-event-opts="{{[['tap',[['e',['$event']]]]]}}" bindtap="__e">图标</label><text class="num">{{num}}</text><text class="price">{{'￥'+price}}</text></view><view class="right">选好了<uni-icons style="display:inline;" vue-id="d03f18ea-1" type="arrowright" bind:__l="__l"></uni-icons></view></view>

@@ -24,18 +24,18 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
-::-webkit-scrollbar {
+.data-v-57280228::-webkit-scrollbar {
   display: none;
 }
-.swiper {
+.swiper.data-v-57280228 {
   height: 364rpx;
 }
-.position {
+.position.data-v-57280228 {
   background-color: white;
   height: 126rpx;
   text-align: center;
 }
-.position .left {
+.position .left.data-v-57280228 {
   display: inline-block;
   vertical-align: middle;
   padding: 0 60rpx;
@@ -44,34 +44,37 @@
   width: 80%;
   word-wrap: break-word;
 }
-.position .right {
+.position .right.data-v-57280228 {
   display: inline-block;
   vertical-align: middle;
   width: 20%;
 }
-.position::after {
+.position.data-v-57280228::after {
   content: '';
   height: 100%;
   display: inline-block;
   width: 0;
   vertical-align: middle;
 }
-.order {
+.order.data-v-57280228 {
   background-color: #f2f1f5;
-  height: 60vh;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   font-size: 14px;
+  overflow-y: hidden;
 }
-.order .left {
+.order .left.data-v-57280228 {
   height: 100%;
   margin-top: 18rpx;
   overflow-y: scroll;
   margin-right: 16rpx;
   width: 122rpx;
 }
-.order .left .type {
+.order .left .type.data-v-57280228 {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 122rpx;
@@ -80,22 +83,23 @@
   background-color: white;
   border-bottom: 1px solid #f5f4f9;
 }
-.order .left .active {
+.order .left .active.data-v-57280228 {
   background-color: transparent;
   border-left: 6rpx solid gold;
   font-weight: bold;
 }
-.order .right {
+.order .right.data-v-57280228 {
   margin-top: 18rpx;
   width: 600rpx;
+  height: 100%;
 }
-.order .right .card {
+.order .right .card.data-v-57280228 {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%;
   height: 336rpx;
   margin-bottom: 30rpx;
-  padding: 30rpx 0;
+  padding-top: 30rpx;
   padding-left: 60rpx;
   display: inline-block;
   background-color: white;
@@ -105,21 +109,44 @@
           box-shadow: 1px 0px 6px #C8C7CC;
   position: relative;
 }
-.order .right .card .bottom {
-  height: 40%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  padding-top: 20rpx;
-  font-size: 16px;
+.order .right .card .bg.data-v-57280228 {
+  position: absolute;
+  right: 0;
+  top: 40rpx;
+  background-size: 100% auto;
+  width: 300rpx;
+  height: 300rpx;
+}
+.order .right .card .custom.data-v-57280228 {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  height: 45%;
 }
-.order .right .card .text {
-  height: 60%;
+.order .right .card .custom .bottom.data-v-57280228 {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  height: 42rpx;
+  line-height: 42rpx;
+  font-size: 14px;
+  display: inline-block;
+}
+.order .right .card .custom .bottom text.data-v-57280228 {
+  vertical-align: middle;
+}
+.order .right .card .custom .bottom uni-icons.data-v-57280228 {
+  vertical-align: middle;
+}
+.order .right .card .text.data-v-57280228 {
+  height: 45%;
   width: 50%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -131,5 +158,38 @@
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
           justify-content: space-between;
+}
+.cart.data-v-57280228 {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 4;
+}
+.cart .row.data-v-57280228 {
+  padding: 30rpx;
+  background-color: white;
+  border-bottom: 1px solid #ebeaef;
+}
+.cart .row .message.data-v-57280228 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-content: center;
+          align-content: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.cart .row .message .left view.data-v-57280228 {
+  margin-bottom: 10rpx;
+}
+.cart .row .message .right.data-v-57280228 {
+  font-size: 18px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 

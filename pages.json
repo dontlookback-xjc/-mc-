@@ -13,6 +13,14 @@
 				"navigationStyle":"default"
 				
 			}
+		},
+		{
+			
+			"path": "pages/custom/index",
+			"style": {
+				"navigationStyle":"default"
+				
+			}
 		}
 	],
 	"globalStyle": {
