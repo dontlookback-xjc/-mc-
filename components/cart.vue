@@ -4,7 +4,7 @@
 		<text class="num">{{num}}</text>
 		<text class="price"> ￥{{price}}</text>
 		</view>
-		<view class="right">
+		<view class="right" @click="$emit('submit',{total:price,cart:cart})">
 			选好了<uni-icons style="display: inline;" type="arrowright"></uni-icons>
 			</view>
 		</view>

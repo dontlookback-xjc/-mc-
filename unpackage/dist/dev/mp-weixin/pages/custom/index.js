@@ -236,7 +236,9 @@ var _default =
 
   },
   computed: {
+
     price: function price() {var _this = this;
+
       if (this.goods) {
 
         var othersPrice = 0;var _loop = function _loop(
@@ -244,13 +246,11 @@ var _default =
 
           _this.goods.detail.custom[key].forEach(function (value) {
 
-            console.log(_this.priceType[key][value]);
-
             othersPrice += _this.priceType[key][value];
           });};for (var key in this.goods.detail.custom) {_loop(key);
 
         }
-        console.log('r', othersPrice);
+
         return this.goods.price + othersPrice;
       }
       return 0;
@@ -260,11 +260,15 @@ var _default =
 
 
   methods: {
-    radioChange: function radioChange(e, index, ar) {
-      ar[index] = e.detail.value;
+    radioChange: function radioChange(e, index, name) {
+      var r = this.goods.detail;
+
+      r.custom[name].splice(index, 1, e.detail.value);
 
     },
+
     submit: function submit() {
+
       uni.$emit('custom', Object.assign(this.goods, {
         price: this.price }));
 
@@ -285,14 +289,17 @@ var _default =
 
     eventChannel.on('acceptDataFromOpenerPage', function (data) {
       var obj = {};
-      for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-          obj[key] = data[key];
-        }
-      }
+      obj = JSON.parse(JSON.stringify(data));
+
+      // for (let key in data) {
+      // 	if (data.hasOwnProperty(key)) {
+      // 		if(typeof data[key]=='object')
+      // 			obj[key] = data[key]
+      // 	}
+      // }
       obj.num = 1;
       _this2.goods = obj;
-      console.log(obj);
+      console.log(_this2.goods);
 
     });
 

@@ -13,8 +13,8 @@
 				
 			
 					<view style="display: flex;justify-content: space-between;">
-						<view>l{{goods.detail.custom.drink[0]}}</view>
-						<view>r</view>
+						<view>{{name}}</view>
+						<!-- <view>全部</view> -->
 					</view>
 					<view class="border ">
 						<radio-group @change="radioChange($event,index,name)" style="width: 750rpx;height:300rpx;">
@@ -81,6 +81,7 @@
 
 		},
 		computed: {
+			
 			price() {
 				
 				if (this.goods) {
@@ -109,10 +110,10 @@
 			
 				r.custom[name].splice(index,1,e.detail.value)
 				
-			
-
 			},
+			
 			submit() {
+				
 				uni.$emit('custom', Object.assign(this.goods, {
 					price: this.price
 				}))
@@ -152,6 +153,13 @@
 </script>
 
 <style lang="scss">
+	// .uni-swiper-slide-frame{
+	// 	width: 70%!important;
+	// }
+	// uni-swiper-item{
+	// 	width: 70%!important;
+	
+	// }
 	.border {
 		border-bottom: 1px solid #f5f4f9;
 		height: 300rpx;

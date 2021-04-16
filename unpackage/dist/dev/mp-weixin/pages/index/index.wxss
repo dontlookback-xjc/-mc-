@@ -30,10 +30,12 @@
 .swiper.data-v-57280228 {
   height: 364rpx;
 }
+.swiper .swiperBg.data-v-57280228 {
+  background-size: 100% auto;
+}
 .position.data-v-57280228 {
   background-color: white;
   height: 126rpx;
-  text-align: center;
 }
 .position .left.data-v-57280228 {
   display: inline-block;
@@ -43,6 +45,7 @@
           box-sizing: border-box;
   width: 80%;
   word-wrap: break-word;
+  text-align: center;
 }
 .position .right.data-v-57280228 {
   display: inline-block;
@@ -98,7 +101,7 @@
           box-sizing: border-box;
   width: 100%;
   height: 336rpx;
-  margin-bottom: 30rpx;
+  margin-bottom: 16rpx;
   padding-top: 30rpx;
   padding-left: 60rpx;
   display: inline-block;

@@ -325,162 +325,209 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-var _testData = __webpack_require__(/*! ../../js/testData.js */ 72);
-
+var _testData = __webpack_require__(/*! ../../js/testData.js */ 17);
 
 
 
 
-var _map = _interopRequireDefault(__webpack_require__(/*! ../../js/map.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var timeOut = null;var mmask = function mmask() {__webpack_require__.e(/*! require.ensure | components/mask/mask */ "components/mask/mask").then((function () {return resolve(__webpack_require__(/*! ../../components/mask/mask.vue */ 73));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cart = function cart() {__webpack_require__.e(/*! require.ensure | components/cart */ "components/cart").then((function () {return resolve(__webpack_require__(/*! ../../components/cart.vue */ 58));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default = { data: function data() {return { title: 'Hello', position: {}, left: _testData.l, right: _testData.r, leftIndex: 0, enable: false, cart: [], maskShow: false };}, components: { mmask: mmask, cart: cart }, computed: { marginTop: function marginTop() {return this.$navHeight - 80;} // cart(){
-    // 	let result=[];
-    // 	this.right.forEach(item=>{if(item.num) result.push(item)})
-    // 	// this.right.forEach(item=>{if(item.num) result.push(item)})
-    // 	return  result?result:[]
-    // }
-  }, onLoad: function onLoad() {var _this = this;uni.$on('custom', function (res) {// 	let name=res.name
-      // 	let check=false
-      // 	for(let item of this.cart ){
-      // 		if(item.name==name){
-      // 			if(JSON.stringify(item.detail)==JSON.stringify(res.detail)){
-      // 				item.num++;
-      // 				return;
-      // 			}
-      // 		}
-      // 	}
+
+var _map = _interopRequireDefault(__webpack_require__(/*! ../../js/map.js */ 18));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _createForOfIteratorHelper(o, allowArrayLike) {var it;if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {if (it) o = it;var i = 0;var F = function F() {};return { s: F, n: function n() {if (i >= o.length) return { done: true };return { done: false, value: o[i++] };}, e: function e(_e) {throw _e;}, f: F };}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}var normalCompletion = true,didErr = false,err;return { s: function s() {it = o[Symbol.iterator]();}, n: function n() {var step = it.next();normalCompletion = step.done;return step;}, e: function e(_e2) {didErr = true;err = _e2;}, f: function f() {try {if (!normalCompletion && it.return != null) it.return();} finally {if (didErr) throw err;}} };}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var timeOut = null;var mmask = function mmask() {__webpack_require__.e(/*! require.ensure | components/mask/mask */ "components/mask/mask").then((function () {return resolve(__webpack_require__(/*! ../../components/mask/mask.vue */ 51));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var cart = function cart() {__webpack_require__.e(/*! require.ensure | components/cart */ "components/cart").then((function () {return resolve(__webpack_require__(/*! ../../components/cart.vue */ 58));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+{
+  data: function data() {
+    return {
+      title: 'Hello',
+      position: {},
+      left: _testData.l,
+      right: _testData.r,
+      leftIndex: 0,
+      enable: false,
+
+      cart: [],
+      maskShow: false };
+
+
+  },
+  components: {
+    mmask: mmask,
+    cart: cart },
+
+  computed: {
+    cartLength: function cartLength() {
+
+      return this.cart ? this.cart.length : 0;
+
+    },
+    marginTop: function marginTop() {
+      return this.$navHeight - 80;
+    } },
+
+  onLoad: function onLoad() {var _this = this;
+    uni.$on('custom', function (res) {
+      console.log('f', _this.cart);
+      var custom = res.detail.custom;
+      var name = res.name;
+      var same;
+      // 遍历cart
+      var _iterator = _createForOfIteratorHelper(_this.cart),_step;try {for (_iterator.s(); !(_step = _iterator.n()).done;) {var item = _step.value;
+
+          // name一样 检测detail
+          if (item.name == name) {
+            same = true;
+            var temp = {};
+            for (var key in custom) {
+              temp[key] = custom[key].map(function (item) {return item;});
+
+            }
+            console.log(_this.cart);
+            var iCustom = item.detail.custom;
+            //  检测deatil各项{drink snack}
+            loop:
+            for (var _key in iCustom) {
+              if (!temp[_key]) return;
+              if (temp[_key].length != iCustom[_key].length) return;
+              // [可乐 奶茶]
+              var _iterator2 = _createForOfIteratorHelper(iCustom[_key]),_step2;try {for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {var sitem = _step2.value;
+                  var i = temp[_key].indexOf(sitem);
+                  console.log(i);
+                  if (i > -1) {
+                    temp[_key].splice(i, 1);
+                  } else {
+                    // 打断循环 找下一项cart
+                    same = false;
+                    break loop;
+                  }
+                }} catch (err) {_iterator2.e(err);} finally {_iterator2.f();}
+            }
+            // 
+            if (same) {
+              item.num++;
+              return;
+            }
+          }
+        }} catch (err) {_iterator.e(err);} finally {_iterator.f();}
+      _this.cart.push(res);
       // 	this.cart.push(res)
       // 	console.log(this)
       // 	console.log(this.cart)
-    }); // 监听定位设置
-    uni.$on('setPosition', function (res) {_this.position = res;});var res = uni.getStorageSync('lastPostion');if (res) {this.position = res;return;}_map.default.search('麦当劳', function (res) {// 注意id转number
-      res[0].id = parseInt(res[0].id);_this.position = res[0];uni.setStorage({ key: 'lastPostion', data: res });});}, filters: { sp: function sp(value) {return value.split(' ');}, varJoin: function varJoin(value) {var ar = value.regular;for (var key in value.custom) {ar = ar.concat(value.custom[key]);}console.log(ar);return ar.join("+");} }, methods: { showDetail: function showDetail() {this.maskShow = !this.maskShow;}, toMap: function toMap() {uni.navigateTo({ url: '../map/index' });}, scroll: function scroll(e) {if (timeOut) return;timeOut = true;setTimeout(function () {timeOut = false;}, 200);if (e.detail.scrollTop > 50 && e.detail.deltaY < 0) {if (this.enable) return;this.enable = true;this.$nextTick(function () {uni.pageScrollTo({ scrollTop: 254, duration: 300 });});}}, customClick: function customClick(item, button) {switch (button) {case "arrowright":uni.navigateTo({ url: '../custom/index', success: function success(res) {// 通过eventChannel向被打开页面传送数据
-              res.eventChannel.emit('acceptDataFromOpenerPage', item);} });break;case "plus":item.num++;
-          if (this.cart.indexOf(item) == -1) this.cart.push(item);
-          console.log(this.cart);
+
+    });
+    // 监听定位设置
+    uni.$on('setPosition', function (res) {
+      _this.position = res;
+
+    });
+
+    var res = uni.getStorageSync('lastPostion');
+
+    if (res) {
+      this.position = res;
+
+      return;
+    }
+
+    _map.default.search('麦当劳', function (res) {
+      // 注意id转number
+      res[0].id = parseInt(res[0].id);
+      _this.position = res[0];
+
+
+      uni.setStorage({
+        key: 'lastPostion',
+        data: res });
+
+
+    });
+
+  },
+  filters: {
+    sp: function sp(value) {
+      return value.split(' ');
+    },
+    varJoin: function varJoin(value) {
+      var ar = value.regular;
+      for (var key in value.custom) {
+        ar = ar.concat(value.custom[key]);
+      }
+
+      return ar.join("+");
+    } },
+
+  methods: {
+    submit: function submit(data) {
+
+      uni.request({
+        url: 'http://localhost:3000/order',
+        data: Object.assign(data, { name: '江' }),
+        method: 'POST',
+        success: function success(res) {
+          uni.showToast({
+            title: '订单号是' + res.data });
+
+          console.log(res);
+        } });
+
+    },
+    showDetail: function showDetail() {
+
+      this.maskShow = !this.maskShow;
+    },
+    toMap: function toMap() {
+      uni.navigateTo({
+        url: '../map/index' });
+
+    },
+    scroll: function scroll(e) {
+
+      if (timeOut) return;
+      timeOut = true;
+      setTimeout(function () {
+        timeOut = false;
+      }, 200);
+
+      if (e.detail.scrollTop > 50 && e.detail.deltaY < 0) {
+
+        if (this.enable) return;
+        this.enable = true;
+        this.$nextTick(function () {
+
+          uni.pageScrollTo({
+            scrollTop: 254,
+            duration: 300 });
+
+
+        });
+      }
+
+    },
+    clearAll: function clearAll() {
+      this.cart.forEach(function (item) {return item.num = 0;});
+      this.cart = [];
+      this.maskShow = false;
+    },
+    customClick: function customClick(item, button) {
+      switch (button) {
+        case "arrowright":
+          uni.navigateTo({
+            url: '../custom/index',
+            success: function success(res) {
+              // 通过eventChannel向被打开页面传送数据
+              res.eventChannel.emit('acceptDataFromOpenerPage', item);
+            } });
+
           break;
+        case "plus":
+          item.num++;
+          if (this.cart.indexOf(item) == -1) this.cart.push(item);
 
-
+          break;
         case "minus":
 
           item.num--;
+          if (item.num === 0) {
+            this.cart.splice(this.cart.indexOf(item), 1);
+          }
 
           if (this.cart.length == 0) this.maskShow = false;
           break;}

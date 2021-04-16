@@ -1,0 +1,22 @@
+{
+  "name": "mc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dontlookback-xjc/-mc-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dontlookback-xjc/-mc-/issues"
+  },
+  "homepage": "https://github.com/dontlookback-xjc/-mc-#readme",
+  "dependencies": {
+    "websocket": "^1.0.33"
+  }
+}

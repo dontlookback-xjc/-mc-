@@ -13,12 +13,10 @@
 
 						<swiper class="swiper" :indicator-dots="true" :autoplay="true" :interval="3000"
 							:duration="1000">
-							<swiper-item>
-								<view class="swiper-item">{{cart.length}}</view>
-							</swiper-item>
-							<swiper-item>
-								<view class="swiper-item">123</view>
-							</swiper-item>
+							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
+							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
+							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
+							
 						</swiper>
 					</view>
 
@@ -27,7 +25,8 @@
 						<view class="left" @click="toMap">
 							{{position.address}}
 						</view>
-						<view class="right">图标</view>
+						<!-- <view class="right" >							
+							会员中心</view> -->
 						<!-- <view style="display: inline-block; height: 100%; width: 1px;vertical-align: middle;"></view> -->
 					</view>
 					<!-- 点单 -->
@@ -83,32 +82,35 @@
 
 		<!-- 底部 -->
 		<!-- 这个地方用v-show="cart.length" 会有bug -->
-		<view class="cart" v-show="cart.length">
-			<view v-show="this.maskShow">
+		<view class="cart" v-show="cartLength">
+			<view  v-show="maskShow">
 				<view class="row" style="font-size: 12px;display: flex;justify-content: space-between;">
 					<view>已选产品</view>
-					<view @click="cart=[];maskShow=false">清空</view>
+					<view @click="clearAll">清空</view>
 				</view>
-				<view class="row" v-for="(item,index) in cart" :key="index">
-					<view class="message">
-						<view class="left">
-							<view style="font-size: 18px;">{{item.name}}</view>
-							<view style="font-size: 12px;color: #C8C7CC;">
-								{{item.detail|varJoin}}
+				<view style="max-height: 300rpx;overflow-y: scroll;">
+					<view class="row" v-for="(item,index) in cart" :key="index">
+						<view class="message">
+							<view class="left">
+								<view style="font-size: 18px;">{{item.name}}</view>
+								<view style="font-size: 12px;color: #C8C7CC;">
+									{{item.detail|varJoin}}
+								</view>
+								<view style="font-size: 18px;">{{item.price}}</view>
 							</view>
-							<view style="font-size: 18px;">{{item.price}}</view>
+							<view class="right">
+								<uni-icons type="minus" @click="customClick(item,'minus')"></uni-icons>
+								<label for="" style="margin: 0 20rpx;">{{item.num}}</label>
+								<uni-icons type="plus" @click="customClick(item,'plus')"></uni-icons>
+					
+							</view>
 						</view>
-						<view class="right">
-							<uni-icons type="minus" @click="customClick(item,'minus')"></uni-icons>
-							<label for="" style="margin: 0 20rpx;">{{item.num}}</label>
-							<uni-icons type="plus" @click="customClick(item,'plus')"></uni-icons>
-
-						</view>
+					
 					</view>
-
 				</view>
+			
 			</view>
-			<cart :cart="cart" @showDetail="showDetail"></cart>
+			<cart :cart="cart" @showDetail="showDetail" @submit="submit"></cart>
 		</view>
 	</view>
 </template>
@@ -143,17 +145,14 @@
 			cart
 		},
 		computed: {
+			cartLength(){
+				
+				 return this.cart?this.cart.length:0
+				
+			},
 			marginTop() {
 				return this.$navHeight - 80
 			},
-			// cart(){
-
-			// 	let result=[];
-			// 	this.right.forEach(item=>{if(item.num) result.push(item)})
-			// 	// this.right.forEach(item=>{if(item.num) result.push(item)})
-			// 	return  result?result:[]
-			// }
-
 		},
 		onLoad() {
 			uni.$on('custom', (res) => {
@@ -194,14 +193,10 @@
 						}
 						// 
 						if(same){
-							item.num++;
-						
+							item.num++;	
 							return;
 						}
-						
-					}
-					
-					
+					}										
 				}
 				this.cart.push(res);
 				// 	this.cart.push(res)
@@ -251,6 +246,20 @@
 			}
 		},
 		methods: {
+			submit(data){
+			
+				uni.request({
+					url:'http://localhost:3000/order',
+					data:Object.assign(data,{name:'江'}),
+					method:'POST',
+					success:(res)=>{
+						uni.showToast({
+							title:'订单号是'+res.data
+						})
+						console.log(res)
+					}
+				})
+			},
 			showDetail() {
 
 				this.maskShow = !this.maskShow
@@ -261,15 +270,15 @@
 				})
 			},
 			scroll(e) {
-
-				if (timeOut) return
-				timeOut = true
+			
+				if (timeOut) return;
+				timeOut=true
 				setTimeout(() => {
 					timeOut = false
 				}, 200)
 
 				if (e.detail.scrollTop > 50 && e.detail.deltaY < 0) {
-
+					
 					if (this.enable) return
 					this.enable = true;
 					this.$nextTick(() => {
@@ -277,10 +286,16 @@
 						uni.pageScrollTo({
 							scrollTop: 254,
 							duration: 300
+						
 						});
 					})
 				}
 
+			},
+			clearAll(){
+				this.cart.forEach(item=>item.num=0);
+				this.cart=[];
+				this.maskShow=false
 			},
 			customClick(item, button) {
 				switch (button) {
@@ -289,7 +304,6 @@
 							url: '../custom/index',
 							success: (res) => {
 								// 通过eventChannel向被打开页面传送数据
-
 								res.eventChannel.emit('acceptDataFromOpenerPage', item)
 							},
 						})
@@ -299,12 +313,13 @@
 						if (this.cart.indexOf(item) == -1) this.cart.push(item)
 						
 						break;
-
-
 					case "minus":
 
 						item.num--;
-
+						if(item.num===0){
+						this.cart.splice(this.cart.indexOf(item),1)	
+						}
+						
 						if (this.cart.length == 0) this.maskShow = false;
 						break;
 				}
@@ -334,12 +349,15 @@
 
 	.swiper {
 		height: 364rpx;
+		.swiperBg{
+			background-size: 100% auto;
+		}
 	}
 
 	.position {
 		background-color: white;
 		height: 126rpx;
-		text-align: center;
+		
 
 		.left {
 			display: inline-block;
@@ -348,6 +366,7 @@
 			box-sizing: border-box;
 			width: 80%;
 			word-wrap: break-word;
+			text-align: center;
 		}
 
 		.right {
@@ -413,7 +432,7 @@
 				box-sizing: border-box;
 				width: 100%;
 				height: 336rpx;
-				margin-bottom: 30rpx;
+				margin-bottom: 16rpx;
 				padding-top: 30rpx;
 				padding-left: 60rpx;
 				display: inline-block;
@@ -478,6 +497,7 @@
 		bottom: 0;
 		width: 100%;
 		z-index: 4;
+		
 
 		.row {
 			padding: 30rpx;

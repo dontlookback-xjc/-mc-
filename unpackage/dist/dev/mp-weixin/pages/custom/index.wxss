@@ -38,7 +38,6 @@
           justify-content: center;
 }
 .border .others {
-  background-color: red;
   text-align: center;
   font-size: 18px;
   border: 1px solid double;
