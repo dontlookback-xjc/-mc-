@@ -12,6 +12,7 @@ var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));function 
 
 
 
+
 var b = uni.getMenuButtonBoundingClientRect();
 
 _vue.default.prototype.$navHeight = (b.top - uni.getSystemInfoSync().statusBarHeight + b.bottom) * 2;

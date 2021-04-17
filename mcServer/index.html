@@ -68,7 +68,7 @@
   </form>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-
+    var num=0;
 
     var form = document.getElementById('form');
     var input = document.getElementById('input');
@@ -82,24 +82,26 @@
             name: input.value
           }
         });
-        
+
         socket.on('order', function (msg) {
-          let cart=msg.cart.map(item=>item.name).join()
+          let cart = msg.cart.map(item => item.name).join()
           var item = document.createElement('li');
-          item.textContent =`Order: ${msg.order}: Total:${msg.total} detail:${cart} `;
-       
+
+          item.onclick = function () {
+            console.log('click')
+            socket.emit('accept', {name:'江',num:num++})
+          }
+          item.textContent = `Order: ${msg.order}: Total:${msg.total} detail:${cart} `;
+
           messages.appendChild(item);
           window.scrollTo(0, document.body.scrollHeight);
-      });
-        
+        });
+
 
       }
 
     });
 
-    // socket.on('order',(mes)=>{
-    //   console.log('orderNum:',mes)
-    // })
   </script>
 </body>
 

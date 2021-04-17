@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/dontlookback-xjc/-mc-#readme",
   "dependencies": {
+    "@hyoga/uni-socket.io": "^3.0.4",
+    "vue-socket.io": "^3.0.10",
     "websocket": "^1.0.33"
   }
 }

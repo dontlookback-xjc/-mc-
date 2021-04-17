@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 
 
+
 // #ifndef H5
 let b=uni.getMenuButtonBoundingClientRect()
 
