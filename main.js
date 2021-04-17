@@ -4,7 +4,10 @@ import App from './App'
 import SocketIo from 'mcServer/socket.io/socket.io.js'
 
 
+<<<<<<< HEAD
 Vue.prototype.$socket=socket
+=======
+>>>>>>> dev
 // #ifndef H5
 let b=uni.getMenuButtonBoundingClientRect()
 

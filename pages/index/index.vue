@@ -13,10 +13,12 @@
 
 						<swiper class="swiper" :indicator-dots="true" :autoplay="true" :interval="3000"
 							:duration="1000">
-							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
-							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
-							<swiper-item class="swiperBg" style="background-image: url(../../static/swiper.jpg);"/>
-							
+							<swiper-item class="swiperBg"  >
+								<view style="height: 100%;width: 100%;background-size: 100% auto;" :style="{backgroundImage:`url(${bgImg})`}"></view>
+							</swiper-item>
+						<!-- 	<swiper-item class="swiperBg" :style="{backgroundImage:`url(${bgImg})`}" />
+							<swiper-item class="swiperBg" :style="{backgroundImage:`url(${bgImg})`}" /> -->
+
 						</swiper>
 					</view>
 
@@ -83,7 +85,7 @@
 		<!-- 底部 -->
 		<!-- 这个地方用v-show="cart.length" 会有bug -->
 		<view class="cart" v-show="cartLength">
-			<view  v-show="maskShow">
+			<view v-show="maskShow">
 				<view class="row" style="font-size: 12px;display: flex;justify-content: space-between;">
 					<view>已选产品</view>
 					<view @click="clearAll">清空</view>
@@ -102,13 +104,13 @@
 								<uni-icons type="minus" @click="customClick(item,'minus')"></uni-icons>
 								<label for="" style="margin: 0 20rpx;">{{item.num}}</label>
 								<uni-icons type="plus" @click="customClick(item,'plus')"></uni-icons>
-					
+
 							</view>
 						</view>
-					
+
 					</view>
 				</view>
-			
+
 			</view>
 			<cart :cart="cart" @showDetail="showDetail" @submit="submit"></cart>
 		</view>
@@ -123,6 +125,8 @@
 
 	var timeOut = null
 	import map from "../../js/map.js"
+	import io from '@hyoga/uni-socket.io'
+	import bgImg from '@/static/swiper.jpg';
 	import mmask from "../../components/mask/mask.vue"
 	import cart from "../../components/cart.vue"
 	export default {
@@ -134,7 +138,7 @@
 				right: r,
 				leftIndex: 0,
 				enable: false,
-
+				bgImg:bgImg,
 				cart: [],
 				maskShow: false
 
@@ -145,10 +149,10 @@
 			cart
 		},
 		computed: {
-			cartLength(){
-				
-				 return this.cart?this.cart.length:0
-				
+			cartLength() {
+
+				return this.cart ? this.cart.length : 0
+
 			},
 			marginTop() {
 				return this.$navHeight - 80
@@ -156,16 +160,16 @@
 		},
 		onLoad() {
 			uni.$on('custom', (res) => {
-				console.log('f',this.cart)
+				console.log('f', this.cart)
 				let custom = res.detail.custom
 				let name = res.name
 				let same
 				// 遍历cart
 				for (let item of this.cart) {
-					
+
 					// name一样 检测detail
 					if (item.name == name) {
-						same=true
+						same = true
 						let temp = {};
 						for (let key in custom) {
 							temp[key] = custom[key].map(item => item)
@@ -175,28 +179,28 @@
 						let iCustom = item.detail.custom
 						//  检测deatil各项{drink snack}
 						loop:
-						for (let key in iCustom) {
-							if (!temp[key]) return;
-							if (temp[key].length != iCustom[key].length) return
+							for (let key in iCustom) {
+								if (!temp[key]) return;
+								if (temp[key].length != iCustom[key].length) return
 								// [可乐 奶茶]
-							for (let sitem of iCustom[key]) {
-								let i = temp[key].indexOf(sitem)
-								console.log(i)
-								if (i > -1) {
-									temp[key].splice(i, 1)
-								} else {
-									// 打断循环 找下一项cart
-									same=false;
-									break loop;
+								for (let sitem of iCustom[key]) {
+									let i = temp[key].indexOf(sitem)
+									console.log(i)
+									if (i > -1) {
+										temp[key].splice(i, 1)
+									} else {
+										// 打断循环 找下一项cart
+										same = false;
+										break loop;
+									}
 								}
-							}					
-						}
+							}
 						// 
-						if(same){
-							item.num++;	
+						if (same) {
+							item.num++;
 							return;
 						}
-					}										
+					}
 				}
 				this.cart.push(res);
 				// 	this.cart.push(res)
@@ -241,24 +245,43 @@
 				for (let key in value.custom) {
 					ar = ar.concat(value.custom[key])
 				}
-			
+
 				return ar.join("+")
 			}
 		},
 		methods: {
-			submit(data){
+			submit(data) {
+				const socket = io('http://localhost:3000', {
+					
+					transports: ['websocket', 'polling'],
+					timeout: 5000,
+				});
+				socket.on('connect', () => {
+					// ws连接已建立，此时可以进行socket.io的事件监听或者数据发送操作
+					console.log('ws 已连接');
+					// socket.io 唯一连接id，可以监控这个id实现点对点通讯
+				
+					socket.on('done', (message) => {
+						// 收到服务器推送的消息，可以跟进自身业务进行操作
+						console.log('取得单号：', message);
+					});
+					// 主动向服务器发送数据
+					socket.emit('order', Object.assign(data,{name:'江'}));
+				});
+
 			
-				uni.request({
-					url:'http://localhost:3000/order',
-					data:Object.assign(data,{name:'江'}),
-					method:'POST',
-					success:(res)=>{
-						uni.showToast({
-							title:'订单号是'+res.data
-						})
-						console.log(res)
-					}
-				})
+				// let socket= this.$io.connect('http://localhost:3000')
+				// uni.request({
+				// 	url:'http://localhost:3000/order',
+				// 	data:Object.assign(data,{name:'江'}),
+				// 	method:'POST',
+				// 	success:(res)=>{
+				// 		uni.showToast({
+				// 			title:'订单号是'+res.data
+				// 		})
+				// 		console.log(res)
+				// 	}
+				// })
 			},
 			showDetail() {
 
@@ -270,15 +293,15 @@
 				})
 			},
 			scroll(e) {
-			
+
 				if (timeOut) return;
-				timeOut=true
+				timeOut = true
 				setTimeout(() => {
 					timeOut = false
 				}, 200)
 
 				if (e.detail.scrollTop > 50 && e.detail.deltaY < 0) {
-					
+
 					if (this.enable) return
 					this.enable = true;
 					this.$nextTick(() => {
@@ -286,16 +309,16 @@
 						uni.pageScrollTo({
 							scrollTop: 254,
 							duration: 300
-						
+
 						});
 					})
 				}
 
 			},
-			clearAll(){
-				this.cart.forEach(item=>item.num=0);
-				this.cart=[];
-				this.maskShow=false
+			clearAll() {
+				this.cart.forEach(item => item.num = 0);
+				this.cart = [];
+				this.maskShow = false
 			},
 			customClick(item, button) {
 				switch (button) {
@@ -311,15 +334,15 @@
 					case "plus":
 						item.num++;
 						if (this.cart.indexOf(item) == -1) this.cart.push(item)
-						
+
 						break;
 					case "minus":
 
 						item.num--;
-						if(item.num===0){
-						this.cart.splice(this.cart.indexOf(item),1)	
+						if (item.num === 0) {
+							this.cart.splice(this.cart.indexOf(item), 1)
 						}
-						
+
 						if (this.cart.length == 0) this.maskShow = false;
 						break;
 				}
@@ -349,7 +372,8 @@
 
 	.swiper {
 		height: 364rpx;
-		.swiperBg{
+
+		.swiperBg {
 			background-size: 100% auto;
 		}
 	}
@@ -357,7 +381,7 @@
 	.position {
 		background-color: white;
 		height: 126rpx;
-		
+
 
 		.left {
 			display: inline-block;
@@ -497,7 +521,7 @@
 		bottom: 0;
 		width: 100%;
 		z-index: 4;
-		
+
 
 		.row {
 			padding: 30rpx;
